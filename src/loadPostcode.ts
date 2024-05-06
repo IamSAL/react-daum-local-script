@@ -1,3 +1,5 @@
+import { DaumtScript } from "./daumscript";
+
 declare global {
   interface Window {
     daum?: {
@@ -134,14 +136,15 @@ const loadPostcode = (function () {
 
     promise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = url;
-      script.onload = () => {
-        if( window?.daum?.Postcode ) {
-          return resolve(window.daum.Postcode);
-        }
-        reject(new Error('Script is loaded successfully, but cannot find Postcode module. Check your scriptURL property.'))
-      };
-      script.onerror = (error) => reject(error);
+       script.type = 'text/javascript';
+      script.textContent = DaumtScript;
+      // script.onload = () => {
+      //   if( window?.daum?.Postcode ) {
+      //     return resolve(window.daum.Postcode);
+      //   }
+      //   reject(new Error('Script is loaded successfully, but cannot find Postcode module. Check your scriptURL property.'))
+      // };
+      // script.onerror = (error) => reject(error);
       script.id = scriptId;
       document.body.appendChild(script);
     })
